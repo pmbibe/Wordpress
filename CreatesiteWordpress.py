@@ -6,10 +6,12 @@ def download_wordpress():
     os.system("wget https://vi.wordpress.org/latest-vi.tar.gz")
     os.system("tar -xvf latest-vi.tar.gz")
 def deploy_site_wordpress(name):
-    nginx_path = "/usr/share/nginx/" + name
-    os.system("mkdir " + nginx_path)
-    os.system("""cp -R wordpress/* """ + nginx_path)
-    os.system("chmod -R 755 " + nginx_path)
+    nginx_path = "mkdir /usr/share/nginx/" + name
+    os.system(nginx_path)
+    copy_file = """cp -R wordpress/* """ + nginx_path
+    os.system(copy_file)
+    chmod_file = "chmod -R 755 " + nginx_path
+    os.system(chmod_file)
     os.system("chown -R nginx:nginx /usr/share/nginx/")
 #    copyfile = "cp default.conf /etc/nginx/conf.d/" + name + ".conf"
 #    os.system(copyfile)
@@ -20,4 +22,8 @@ def create_file_config_nginx(name):
 #    copyfile = "cp default.conf /etc/nginx/conf.d/" + name + ".conf"
 #    os.system(copyfile)
 #    os.system("""echo "some data for the file" >> """ + file_config)
-    
+def main():
+    download_wordpress()
+    deploy_site_wordpress("test1.com")
+    create_file_config_nginx("test1.com")
+main()
