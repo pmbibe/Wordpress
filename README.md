@@ -15,7 +15,9 @@ python3 CreatesiteWordpress.py web1.com web2.com web3.com
 Đối với server đã cài đặt mysql, nginx và php. Thì nên tạo file .my.cnf chưa user và pass để đăng nhập mysql.
 
 [mysql]
+
 user=root
+
 password=HelloWorld
 
 PHP sử dụng unixsocket. Bằng cách sử dụng câu lệnh sau: \cp www.conf /etc/php-fpm.d/www.conf
