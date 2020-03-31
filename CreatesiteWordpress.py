@@ -12,7 +12,7 @@ def deploy_site_wordpress(name):
     os.system(nginx_path)
     copy_file = """cp -R wordpress/* /usr/share/nginx/""" + name
     os.system(copy_file)
-    chmod_file = "chmod -R 755 " + nginx_path
+    chmod_file = "chmod -R 755 /usr/share/nginx/" + name
     os.system(chmod_file)
     os.system("chown -R nginx:nginx /usr/share/nginx/")
 #    copyfile = "cp default.conf /etc/nginx/conf.d/" + name + ".conf"
@@ -31,10 +31,10 @@ def config_databases(name):
     command_wp_databases = """sed 's/database_name_here/""" + databases + """/; s/username_here/""" + user + """/; s/password_here/""" + password + """/' wp-config.php > /usr/share/nginx/""" + name + "/wp-config.php"
     os.system(command_wp_databases)
 def main():
-    if path.exists('wordpress'):
+    if path.exists('wordpress') == False:
         download_wordpress()
-    for site in range(1, len(sys.argv)):
-        deploy_site_wordpress(site)
-        create_file_config_nginx(site)
-        config_databases(site)
+    for site in (1, len(sys.argv)):
+        deploy_site_wordpress(sys.argv[site])
+        create_file_config_nginx(sys.argv[site])
+        config_databases(sys.argv[site])
 main()
