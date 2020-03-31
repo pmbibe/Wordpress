@@ -1,4 +1,4 @@
-# Wordpress
+# Wordpress - Centos7
 
 git clone https://github.com/pmbibe/Wordpress
 
