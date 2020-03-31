@@ -28,6 +28,6 @@ yum-config-manager --enable remi-php72 && \
 yum -y update && \
 yum -y install php && \
 yum -y install php-fpm php-gd php-json php-mbstring php-mysqlnd php-xml php-xmlrpc php-opcache
-\cp php.ini /etx/php.ini 
+\cp php.ini /etc/php.ini 
 systemctl start php-fpm
 
