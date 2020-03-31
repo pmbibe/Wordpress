@@ -33,7 +33,7 @@ def config_databases(name):
 def main():
     if path.exists('wordpress'):
         download_wordpress()
-    for site in (1, len(sys.argv)):
+    for site in range(1, len(sys.argv)):
         deploy_site_wordpress(site)
         create_file_config_nginx(site)
         config_databases(site)
