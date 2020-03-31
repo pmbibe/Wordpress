@@ -30,7 +30,3 @@ yum -y install php && \
 yum -y install php-fpm php-gd php-json php-mbstring php-mysqlnd php-xml php-xmlrpc php-opcache
 \cp php.ini /etx/php.ini 
 systemctl start php-fpm
-#mysql
-yum -y localinstall https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
-yum -y install mysql-community-server
-grep 'A temporary password' /var/log/mysqld.log |tail -1
