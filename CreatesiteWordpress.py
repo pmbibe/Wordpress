@@ -4,6 +4,8 @@ import sys
 def prepare():
     os.system("Installing php-mysql-nginx")
     os.system("chmod +x mysql-nginx-php.sh && ./mysql-nginx-php.sh")
+def restart_nginx():
+    os.system("systemctl restart nginx")
 def download_wordpress():
     os.system("wget https://vi.wordpress.org/latest-vi.tar.gz")
     os.system("tar -xvf latest-vi.tar.gz")
@@ -15,6 +17,7 @@ def deploy_site_wordpress(name):
     chmod_file = "chmod -R 755 /usr/share/nginx/" + name
     os.system(chmod_file)
     os.system("chown -R nginx:nginx /usr/share/nginx/")
+    restart_nginx()
 #    copyfile = "cp default.conf /etc/nginx/conf.d/" + name + ".conf"
 #    os.system(copyfile)
 def create_file_config_nginx(name):
@@ -35,7 +38,7 @@ def config_databases(name):
 def main():
     if path.exists('wordpress') == False:
         download_wordpress()
-    for site in (1, len(sys.argv)):
+    for site in range(1, len(sys.argv)):
         deploy_site_wordpress(sys.argv[site])
         create_file_config_nginx(sys.argv[site])
         config_databases(sys.argv[site])
