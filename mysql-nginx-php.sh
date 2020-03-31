@@ -5,7 +5,7 @@ yum -y install Percona-XtraDB-Cluster-57
 yum -y update
 service mysql start
 pass=$(grep 'temporary password' /var/log/mysqld.log | awk '{print($11)}')
-mysql -uroot -p$pass -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'Vega123312##';" --connect-expired-password
+mysql -uroot -p$pass -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'HeloWorld';" --connect-expired-password
 #nginx
 touch /etc/yum.repos.d/nginx.repo
 basearch='$basearch'
@@ -27,6 +27,7 @@ yum-config-manager --enable remi-php72 && \
 yum -y update && \
 yum -y install php && \
 yum -y install php-fpm php-gd php-json php-mbstring php-mysqlnd php-xml php-xmlrpc php-opcache
+\cp php.ini /etx/php.ini 
 systemctl start php-fpm
 #mysql
 yum -y localinstall https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
