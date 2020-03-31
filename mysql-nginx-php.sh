@@ -5,7 +5,7 @@ yum -y install Percona-XtraDB-Cluster-57
 yum -y update
 service mysql start
 pass=$(grep 'temporary password' /var/log/mysqld.log | awk '{print($11)}')
-mysql -uroot -p$pass -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'HeloWorld';" --connect-expired-password
+mysql -uroot -p$pass -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'HelloWorld';" --connect-expired-password
 \cp my.cnf ~/.my.cnf
 #nginx
 touch /etc/yum.repos.d/nginx.repo
