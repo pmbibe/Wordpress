@@ -21,3 +21,5 @@ user=root
 password=HelloWorld
 
 PHP sử dụng unixsocket. Bằng cách sử dụng câu lệnh sau: \cp www.conf /etc/php-fpm.d/www.conf
+
+Đường dẫn chứa thu mục của các site là /usr/share/nginx/. Có thể sửa lại cho phù hợp.
