@@ -1,6 +1,8 @@
 import os
+from os import path
+import sys
 def prepare():
-    print("Installing php-mysql-nginx")
+    os.system("Installing php-mysql-nginx")
     os.system("chmod +x mysql-nginx-php.sh && ./mysql-nginx-php.sh")
 def download_wordpress():
     os.system("wget https://vi.wordpress.org/latest-vi.tar.gz")
@@ -8,7 +10,7 @@ def download_wordpress():
 def deploy_site_wordpress(name):
     nginx_path = "mkdir /usr/share/nginx/" + name
     os.system(nginx_path)
-    copy_file = """cp -R wordpress/* """ + nginx_path
+    copy_file = """cp -R wordpress/* /usr/share/nginx/""" + name
     os.system(copy_file)
     chmod_file = "chmod -R 755 " + nginx_path
     os.system(chmod_file)
@@ -17,13 +19,22 @@ def deploy_site_wordpress(name):
 #    os.system(copyfile)
 def create_file_config_nginx(name):
     file_config = name + ".nginx.conf"
-    create_new_config_comand = """sed 's/domain_name/""" + name + """/' > /etc/nginx/conf.d/ """ + name + ".conf"
+    create_new_config_comand = """sed 's/domain_name/""" + name + """/' default.conf > /etc/nginx/conf.d/""" + name + ".conf"
     os.system(create_new_config_comand)
-#    copyfile = "cp default.conf /etc/nginx/conf.d/" + name + ".conf"
-#    os.system(copyfile)
-#    os.system("""echo "some data for the file" >> """ + file_config)
+def config_databases(name):
+    name_split = name.split(".")
+    databases = name_split[0]+"_db"
+    user = name_split[0]+"_user"
+    password = name_split[0]+"_7b****"
+    command = """mysql -Bse "CREATE DATABASE """ + databases + """; CREATE USER '""" + user + """'@'localhost' IDENTIFIED BY '"""+ password+ """'; GRANT ALL PRIVILEGES ON """ + databases+ """.* TO '"""+ user+ """'@'localhost';""" + '"'
+    os.system(command)
+    command_wp_databases = """sed 's/database_name_here/""" + databases + """/; s/username_here/""" + user + """/; s/password_here/""" + password + """/' wp-config.php > /usr/share/nginx/""" + name + "/wp-config.php"
+    os.system(command_wp_databases)
 def main():
-    download_wordpress()
-    deploy_site_wordpress("test1.com")
-    create_file_config_nginx("test1.com")
+    if path.exists('wordpress'):
+        download_wordpress()
+    for site in (1, len(sys.argv)):
+        deploy_site_wordpress(site)
+        create_file_config_nginx(site)
+        config_databases(site)
 main()
